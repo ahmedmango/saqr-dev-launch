@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAQR</title>
+<style>html,body{margin:0;height:100%;background:#A6C4DC;font:15px -apple-system,system-ui,sans-serif;color:#1F2326}p{position:fixed;bottom:40px;width:100%;text-align:center;opacity:0;transition:opacity .4s}p.on{opacity:.6}</style>
+<p id="m">Waiting for the test server...</p>
+<script>
+// Test-build launcher: forwards to the current test server named in url.json (fetched fresh every time).
+(function go(n) {
+  fetch("url.json?t=" + Date.now(), { cache: "no-store" })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j && j.url) location.replace(j.url); else throw 0; })
+    .catch(function () { document.getElementById("m").className = "on"; setTimeout(function () { go(n + 1); }, Math.min(5000, 1000 + n * 500)); });
+})(0);
+</script>
